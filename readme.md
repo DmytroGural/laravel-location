@@ -64,6 +64,31 @@ if ($position = Location::get()) {
 $position = Location::get('192.168.1.1');
 ```
 
+### Retrieve a location via the Request instance
+
+You may also retrieve the location directly from Laravel's Request instance using the provided location() macro. This is highly convenient when working inside controllers, middleware, or using the global helper.
+
+```php
+use Illuminate\Http\Request;
+
+public function index(Request $request)
+{
+    // Retrieve location from the current request IP
+    $position = $request->location();
+    
+    // Or using the global request helper
+    $position = request()->location();
+    
+    // You may also pass a specific IP address
+    $position = request()->location('192.168.1.1');
+    
+    if ($position) {
+        echo $position->countryName;
+    }
+}
+```
+**Note:** IDE autocompletion for the location() macro is supported out-of-the-box.
+
 ## Testing
 
 You may call `Location::fake` with an array of IP address patterns and their expected positions to fake the location of an IP address:
