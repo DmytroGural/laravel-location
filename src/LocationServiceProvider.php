@@ -2,6 +2,7 @@
 
 namespace Stevebauman\Location;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Stevebauman\Location\Commands\Update;
 
@@ -21,6 +22,10 @@ class LocationServiceProvider extends ServiceProvider
         }
 
         $this->commands(Update::class);
+
+        Request::macro('location', function (?string $ip = null) {
+            return app(LocationManager::class)->get($ip);
+        });
     }
 
     /**
